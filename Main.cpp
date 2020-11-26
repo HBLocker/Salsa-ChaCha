@@ -6,7 +6,7 @@
 // 32 bit addition = a+b mod^32
 //https://en.wikipedia.org/wiki/Salsa20
 #include <stdio.h>
-##include <stdint.h>
+#include <stdint.h>
 //papers denoted rotation in section
 #define Rotation(x,n) (((x) << (n)) | ((x) >> (32-(n))))
 //rotation  https://stackoverflow.com/questions/29676648/explaining-method-x-n-x-32-n

@@ -7,17 +7,7 @@ This is where the  name salsa comes from, as the dance mirrios one another.
 The rotations are all constant valeus. Each round is a quartor round which modies one full word per round. 
 
 ---ChaCha---
-ChaCha wors much the same as Salsa. but this one uses 4 additions,xors and rotations per full rotation. a sshown in the code, there is very little changes to create the ChaCha.
-
-
-
-
-
-
-
-
-
-
+ChaCha works much the same as Salsa. but this one uses 4 additions,xors and rotations per full rotation. a sshown in the code, there is very little changes to create the ChaCha.
 
 ChaCha, a variant of Salsa20(Daniel J. Bernstein) 
 https://cr.yp.to/chacha/chacha-20080128.pdf

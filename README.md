@@ -1,5 +1,5 @@
 # Salsa-ChaCha
-I decided to implement salsa and chach as cryptography is something which I find very interesting, ocne I can roughly see how the bits have been shifted this kind of then is easy to picture in my head. 
+I decided to implement salsa and ChaCha as cryptography is something which I find very interesting, ocne I can roughly see how the bits have been shifted this kind of then is easy to picture in my head. 
 Denoted in the papers SALSA works like this:
 a 64bit input x to salsa is split into 16bit in the words function. which is then xord to 32bits. 
 The words are split by postive and negitive, meaning then are one off or oppisite each other. 

@@ -13,12 +13,11 @@
 #define Rotation(x,n) (((x) << (n)) | ((x) >> (32-(n))))
 //rotation  https://stackoverflow.com/questions/29676648/explaining-method-x-n-x-32-n
 #define quarter(a, b, c, d) (			\
-	a += b,  d ^= a,  d = Rotation(d,16),	\
-	c += d,  b ^= c,  b = Rotation(b,12),	\
-	a += b,  d ^= a,  d = Rotation(d, 8),	\
-	c += d,  b ^= c,  b = Rotation(b, 7))
+	a += b,  d ^= a,  d = Rotation(d,7),\
+	c += d,  b ^= c,  b = Rotation(b,9),\
+	a += b,  d ^= a,  d = Rotation(d,13),\
+	c += d,  b ^= c,  b = Rotation(b,18))
 #define ROUNDS 20
-
 //taken from https://cr.yp.to/salsa20.html
 void main_chacha_word(uint32_t out[16],uint32_t const in[16])
 {
@@ -46,7 +45,7 @@ void main_chacha_word(uint32_t out[16],uint32_t const in[16])
 }
 //transformation fothe block mentioend in https://eprint.iacr.org/2007/472.pdf
 //salsa takes in 32bit words, and a 256bit key,64bit nonce value.
-void salsa20_block(uint8_t *out, uint8_t key[32], uint64_t nonce, uint64_t index)
+void main_block(uint8_t *out, uint8_t key[32], uint64_t nonce, uint64_t index)
 {
 	//stattic const to stop change of vlaue.
 	static const char c[16] = "filler";
@@ -65,7 +64,7 @@ void salsa20_main_function(uint8_t *message, uint64_t mlen, uint8_t key[32], uin
 	int i;
 	uint8_t block[64];
 	for (i=0; i<mlen; i++) {
-		if (i%64 == 0) salsa20_block(block, key, nonce, i/64);
+		if (i%64 == 0) main_block(block, key, nonce, i/64);
 		message[i] ^= block[i%64]; //64 bit shift is here
 	}
 }

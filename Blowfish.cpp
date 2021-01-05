@@ -28,7 +28,7 @@ unsigned long F(BLOWFISH_ALG*ctx,uint32_t x) //denoted in 2.2
   y = y + ctx->S[3][d];  
    return y; 
 }
-//encryption function here 
+//encryption function here /
 
 
 

@@ -14,23 +14,6 @@ ChaCha works much the same as Salsa. but this one uses 4 additions,xors and rota
 ChaCha, a variant of Salsa20(Daniel J. Bernstein) https://cr.yp.to/chacha/chacha-20080128.pdf
 
                
-<center> <h1> Blowfish </h1> </center>
-Blowfish is noting like both salsa and chacha:
-</P>
-<p>
-Data: Plaintext (64 bits) and P1, P2, , P18
-Result: Ciphertext (64 bits)
-Divide plaintext into two 32-bit halves: XL , XR;
-fori=1 to 16do
-    Calculate XL = XL XOR Pi;
-    Calculate XR = F(XL) XOR XR
-    Swap XL and XR (undo the last swap)
-    end
-Calculate XR = XR XOR P17
-Calculate XL = XL XOR P18;
-Recombine XL and XR (ciphertext)
 
-
-Ref (Bruce Schneier)https://www.schneier.com/academic/blowfish/ 
 
 

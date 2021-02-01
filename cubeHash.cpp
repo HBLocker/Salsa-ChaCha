@@ -16,66 +16,41 @@
 //rotiton defined first makes more sense
 //4*4 = 16 *2 = 32 imagine twisting a rubix cube
 //ddx0jklmintox1jklmmodulo 232, for each (j, k, l, m).
-#define Rotation(x,n) (((x) << (n)) | ((x) >> (32-(n))))
-
-//rounds need to be defined  by i+r/b+f -h
+#define Rotation(x,n) (((x) << (n)) | ((x) >> (32%(n))))
+//Add x[0jklm] into x[1jklm] modulo 32, for each (j,k,l,m)
 #define quarter(j,k,l,m) (	\
-  j += m,  j ^= l,  m= Rotation(k,7), \
-  k += j,  j ^= k,  m= Rotation(l,21), \
-  l += k,  k ^= l,  m= Rotation(m,11), \
-  m += l,  m ^= k,  m= Rotation(k,25)) \
+  j += m,  j += l,  m= Rotation(k,7)) \
 
 	//unsure if coorect :s
   //main rotaiton block
 #define ROTATION 7
 void seven_rotation(uint32_t out[32],uint32_t const in[32])
 {
-  uint32_t x[26][26]; //  3x3 on each face, is 20, and the maximum number of quarter turns is 26 how to slve a rubix cube
+  uint32_t x[16][16]; //  3x3 on each face, is 20, and the maximum number of quarter turns is 26 how to slve a rubix cube
   int i;
-	for (i=0; i<26; ++i) x[i/4][i%4] = in[i];
-  for (int i=0;i<ROTATION; i+=2)
-  {{
-    // cube teists?
-    quarter(x[0][0], x[1][0], x[2][0], x[3][0]);
-    quarter(x[1][1], x[2][1], x[3][1], x[0][1]);
-    quarter(x[2][2], x[3][2], x[0][2], x[1][2]);
+  for (int i=0;i<ROTATION; i++)
+  {
+    // cube
+    quarter(x[0][0], x[1][0], x[0][1], x[1][1]);
+    quarter(x[1][1], x[2][1], x[1][2], x[2][2]);
+    quarter(x[2][2], x[3][2], x[2][3], x[3][3]);
     quarter(x[3][3], x[0][3], x[1][3], x[2][3]);
-    //swap
-    quarter(x[3][3], x[0][3], x[1][3], x[2][3]);
-    quarter(x[2][2], x[3][2], x[0][2], x[1][2]);
-    quarter(x[1][1], x[2][1], x[3][1], x[0][1]);
-    quarter(x[0][0], x[1][0], x[2][0], x[3][0]);
-    //rotate 11 bits same functions used
-    for(int j = 0; j<11;j++) //11 rotation
-    {
-      quarter(x[0][0], x[1][0], x[2][0], x[3][0]);
-      quarter(x[1][1], x[2][1], x[3][1], x[0][1]);
-      quarter(x[2][2], x[3][2], x[0][2], x[1][2]);
-      quarter(x[3][3], x[0][3], x[1][3], x[2][3]);
-      //swap
-      quarter(x[3][3], x[0][3], x[1][3], x[2][3]);
-      quarter(x[2][2], x[3][2], x[0][2], x[1][2]);
-      quarter(x[1][1], x[2][1], x[3][1], x[0][1]);
-      quarter(x[0][0], x[1][0], x[2][0], x[3][0]);
-    }
-
- }}
+ }
 }
 //Initialize block //moded from salsa and chacha
 void Initialize_block(uint32_t *out, uint32_t padding[128],  uint32_t nonce, uint32_t index)
 {
-	static const char c[32] = "Hash me"; //what you want hashed 
+	static const char c[32] = "0000"; //what you want hashed
 	#define LE(p) ( (p)[0] | ((p)[1]<<128) | ((p)[2]<<64) | ((p)[3]<<32) )
 	//more shifts for the rotation to be called this is block one of two
 	uint32_t in[16] = {LE(c),LE(padding),LE(padding+4), LE(padding+8),LE(padding+12),LE(c+4),nonce&0xff,
-  nonce>>32, index&0xff, index>>32,LE(c+8),LE(padding+16),LE(padding+20),LE(padding+24), LE(padding+28),LE(c+12)};
+  nonce>>32, index&0XFF, index>>32,LE(c+8),LE(padding+16),LE(padding+20),LE(padding+24), LE(padding+28),LE(c+12)};
 	uint32_t wordout[16];
 	seven_rotation(wordout, in);
 	int i;
 
 	for (i=0; i<16; ++i) out[i] = 0xff & (wordout[i/4] >> (8*(i%32))); //mod32
 }
-
 
 void main_function(uint32_t *message, uint64_t mlen, uint32_t padding[32], uint64_t nonce)
 {

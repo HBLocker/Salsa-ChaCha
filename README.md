@@ -14,18 +14,17 @@ ChaCha works much the same as Salsa. but this one uses 4 additions,xors and rota
 <p>
   
   
+
+  
 <p>
-  <center>      <h1>    ---Cube Hash---  </h1>   </center>
  
-different type of hash, but the codde was moded form Salsa and ChaCha why it is in this repo. So the code goes though many different swaps much like turning a cube. 
-The rotation rounds can be seen going though the combiniaitons then each part is hashed and xord each time. I am not 100% if what i have done is correct, but the output looks close enough. 
-</p>
-<p>
-  
-  
-  
 ChaCha, a variant of Salsa20(Daniel J. Bernstein) https://cr.yp.to/chacha/chacha-20080128.pdf
+</p>
+
+<p>
 CubeHash(Daniel J. Bernstein) https://cr.yp.to/chacha/chacha-20080128.pdf
+  
+</p>
                
 
 

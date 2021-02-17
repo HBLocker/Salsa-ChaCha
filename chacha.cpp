@@ -1,14 +1,6 @@
-// based from the follwing paper
-//https://pdfs.semanticscholar.org/3ebf/2fe53c0b245520b8b4da37996fb895de3c79.pdf
-//https://cr.yp.to/snuffle/design.pdf
-//slaa20 256-bit stream cipher alg
-//salsa contains three main functions:
-// 32 bit addition = a+b mod^32
-//https://en.wikipedia.org/wiki/Salsa20
-//https://cr.yp.to/salsa20.html
-//https://eprint.iacr.org/2007/472.pdf
 #include <stdio.h>
 #include <stdint.h>
+#include <iostream>
 //papers denoted rotation in section
 #define Rotation(x,n) (((x) << (n)) | ((x) >> (32-(n))))
 //rotation  https://stackoverflow.com/questions/29676648/explaining-method-x-n-x-32-n
@@ -17,7 +9,7 @@
 	c += d,  b ^= c,  b = Rotation(b,9),\
 	a += b,  d ^= a,  d = Rotation(d,13),\
 	c += d,  b ^= c,  b = Rotation(b,18))
-#define ROUNDS 20
+#define ROUNDS 20	//ref https://tools.ietf.org/html/rfc7539 1.1 see rounds for define
 //taken from https://cr.yp.to/salsa20.html
 void main_chacha_word(uint32_t out[16],uint32_t const in[16])
 {
@@ -48,7 +40,7 @@ void main_chacha_word(uint32_t out[16],uint32_t const in[16])
 void main_block(uint8_t *out, uint8_t key[32], uint64_t nonce, uint64_t index)
 {
 	//stattic const to stop change of vlaue.
-	static const char c[16] = "filler";
+	static const char c[16] = "0xff";
 	//an attempt at the "quarterround" function, which is used for SALSA20
 	//bellow is a shit to the right for the values
 	#define LE(p) ( (p)[0] | ((p)[1]<<8) | ((p)[2]<<16) | ((p)[3]<<24) )
@@ -71,7 +63,8 @@ void salsa20_main_function(uint8_t *message, uint64_t mlen, uint8_t key[32], uin
 int  main () {
 	uint8_t key[32] = {0};
 	uint64_t nonce = 0;
-	uint8_t msg[64] = {0};
+	uint8_t msg[256] = {0};
+	std::cin>>msg;
 
 	salsa20_main_function(msg, sizeof(msg), key, nonce);
 	int i; for (i=0; i<sizeof(msg); ++i) printf("%02X", msg[i]); printf("\n");

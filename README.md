@@ -1,31 +1,32 @@
-I am enjoying cryptography as it is a subject which I have always loved and found fascinating how data can be scrambled. Having worked with post QR. It has made my passion for this subject much stronger. Here are some examples of algs I have implemented based on their papers. 
-<p>
-  <center>    <h1> ---Salsa--- </h1> </center>
- Once I can roughly see how the bits have been shifted this kind of then is easy to picture in my head. Denoted in the papers SALSA works like this: a 64bit input x to salsa is split into 16bit in the words function. which is then xord to 32bits. The words are split by positive and negative, meaning than are one-off or opposite
-each other. This is where the name salsa comes from, as the dance mirrors one another. 
-  
-</p>
 
-<p>
-  <center>      <h1>    ---ChaCha---  </h1>   </center>
-ChaCha works much the same as Salsa. but this one uses 4 additions,xors and rotations per full rotation. a shown in the code, there is very little changes to create the ChaCha.
-</p>
 
-<p>
-  
-  
+# Salsa20 and ChaCha
 
-  
-<p>
+
+Lightweight implemetation of both Salsa20 and ChaCha:
+I chose theese algrithms as they seemed fun to implement.
+
+
+
+
+Salsa20s quarter round is stated as follows:
+
+    b ^= (a+d) <<< 7;
+    c ^= (b+a) <<< 9;
+    d ^= (c+b) <<< 13;
+    a^= (d+c) <<< 18;
+
+ ChaCha is as follows
  
-ChaCha, a variant of Salsa20(Daniel J. Bernstein) https://cr.yp.to/chacha/chacha-20080128.pdf
-</p>
+    a += b; d ^= a; d <<<= 16;
+    c += d; b ^= c; b <<<= 12;
+    a += b; d ^= a; d <<<= 8;
+    c += d; b ^= c; b <<<= 7;
 
-<p>
-CubeHash(Daniel J. Bernstein) https://cr.yp.to/chacha/chacha-20080128.pdf
+Reffrences:
+D. J. Bernstein. (NA). The Salsa20 core. Available: http://cr.yp.to/salsa20.html. Last accessed NA.
+
+Jean-Philippe, et al (2007)  New Features of Latin Dances:Analysis of Salsa, ChaCha, and Rumba
+
+ Daniel J. Bernstein.(na)   ChaCha a varient of Salsa20  
   
-</p>
-               
-
-
-

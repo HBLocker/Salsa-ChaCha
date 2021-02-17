@@ -4,7 +4,7 @@
 
 
 Lightweight implemetation of both Salsa20 and ChaCha:
-I chose theese algrithms as they seemed fun to implement.
+I chose theese algorithms as they seemed fun to implement.
 
 
 

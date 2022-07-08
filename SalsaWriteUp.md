@@ -1,6 +1,6 @@
 # Salsa how it works
 
-After I think two years ago I wrote these, I deviced to come back and write an overvew of how they work. 
+
 
 Salsa20 is a modern and quick stream cipher, it was developed in 2005 by Bernstine who is a professor at the university of Illinois. 
 

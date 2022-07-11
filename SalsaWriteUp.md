@@ -9,15 +9,17 @@ The input to the function is the secret key, which can be 32 or 16 bytes long, a
 
 
 The main part of the algorithm is its hash functon which takes a 64 byte long imput data from the salsa20 expansion funciton and jumbles it up which will return a 64byte long ouput:
-````
+
 7439AC2BB218D2A395D7E87055BFEC43A8A7156399DAB60AE69960D0C1B43A72411E7BD535B8CF4598A568277BBF75D84344C39F450AC79B3C65279803FE04E8D690C494F71069BA879FC046156D11BD115B009CCA1FF5F2F2277DBAEA2D3760D54A8DD33C77529427FD945C41266EF22511865DCFE8ECAD4C7F253D24CEA2000547AB194E8135ED42891A905A884016F909E0DA6565FE590A9D3526D2EC7A3A857E67302755FEBE2BA179A9327D99E576D63C941B7E067E5E703663F6F4FD82B58B27FA798E7879C695ABCBDBA0D609DE330B96FD1448AE6DB81B0BE422745E8CE8DFBACE18DFE381B2E74A0EE0499024D010BB7FDA85D0E6B169FD0CDBD91B
-````
+
 
 
 
 
 #### Compressed explanation of Salsa20 specification.
 
+Denoted from the paper [Salsa20 specification](https://cr.yp.to/snuffle/spec.pdf) it expains the following stages are taken for the allgorithm to complete its purpose. 
+There are some caviates to this such as little edien function. A nice explnation can be found here [Little Endian function](https://www.geeksforgeeks.org/little-and-big-endian-mystery/)
 
 The algorithm has three main parts to it:
 - 32 bit addition preducing the sum of a + b Mod 32 of two 32 bit words a and b. 
@@ -71,7 +73,7 @@ A double round is a column round followed by a row round:
 doubleround(x) = rowround(columnround(x))
 ````
 
-#### Littleendian Function
+#### Litte endian Function
 
 If b is a 4-byte sequence then littleendian(b) is a word.
 ````

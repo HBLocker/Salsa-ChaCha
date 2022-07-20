@@ -18,6 +18,7 @@ The main part of the algorithm is its hash functon which takes a 64 byte long im
 
 #### Compressed explanation of Salsa20 specification.
 
+
 Denoted from the paper [Salsa20 specification](https://cr.yp.to/snuffle/spec.pdf) it expains the following stages are taken for the allgorithm to complete its purpose. 
 There are some caviates to this such as little edien function. A nice explnation can be found here [Little Endian function](https://www.geeksforgeeks.org/little-and-big-endian-mystery/)
 
@@ -26,11 +27,32 @@ The algorithm has three main parts to it:
 -  32 bit XOR of a and b 
 -  32 bit rotation of a and b shifting the bits to the left, a << b where b is constant. 
 
-````
-b ^= (a+d) <<< 7;
+
+ The core operation in Salsa20 is the quarter-round:  QR(a, b, c, d) that takes a four-word input and produces a four-word output
+```` 
+
+b ^= (a+d) <<< 7; 
 c ^= (b+a) <<< 9;
 d ^= (c+b) <<< 13;
 a^= (d+c) <<< 18;
+````
+
+
+
+Odd numbered rounds apply QR(a, b, c, d) to each of the four columns in the 4×4.Even-numbered rounds apply it to each of the four rows. 
+Two consecutive rounds (column-round and row-round) together are called a double-round:
+
+
+````
+quarter (x[0][0], x[1][0], x[2][0], x[3][0]); //even values
+        quarter(x[1][1], x[2][1], x[3][1], x[0][1]);
+        quarter(x[2][2], x[3][2], x[0][2], x[1][2]);
+        quarter(x[3][3], x[0][3], x[1][3], x[2][3]);
+        //////////////////////////////////////////////
+        quarter(x[0][0], x[0][1], x[0][2], x[0][3]); // odd values
+        quarter(x[1][1], x[1][2], x[1][3], x[1][0]);
+        quarter(x[2][2], x[2][3], x[2][0], x[2][1]);
+        quarter(x[3][3], x[3][0], x[3][1], x[3][2]);
 ````
 
 #### Rowround function 

@@ -88,6 +88,6 @@ int main() {
 
   salsa20_main_function(msg, sizeof(msg), key, nonce);
   int i;
-  for (i = 0; i < sizeof(msg); ++i) printf("%02X", msg[i]);
-  printf("\n");
+  for (i = 0; i < sizeof(msg); ++i) sprintf("%02X", msg[i]);
+  sprintf("\n");
 }
